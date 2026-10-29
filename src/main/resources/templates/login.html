@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · NFPL Access Control</title><link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="login-page">
+  <main class="login-layout">
+    <section class="login-brand-panel">
+      <div class="brand brand-light"><span class="brand-mark">N</span><span>NFPL <small>ACCESS CONTROL</small></span></div>
+      <div class="login-pitch"><div class="eyebrow">SHIPMENTS. SAFELY MANAGED.</div><h1>Right people.<br><em>Right actions.</em></h1><p>A clear, auditable view of who can do what across every shipment job.</p></div>
+      <div class="login-foot"><span class="status-dot"></span> Permission-aware workflow · Audit-ready decisions</div>
+      <div class="orb orb-one"></div><div class="orb orb-two"></div>
+    </section>
+    <section class="login-form-panel">
+      <div class="login-form-wrap">
+        <div class="eyebrow">WELCOME BACK</div><h2>Sign in to your workspace</h2><p class="muted">Use your NFPL demo account to continue.</p>
+        <div class="alert alert-error" th:if="${param.error}">Username or password is incorrect, or your account is inactive.</div>
+        <div class="alert alert-success" th:if="${param.logout}">You have been signed out.</div>
+        <form th:action="@{/login}" method="post" class="stack-form">
+          <label for="username">Username</label><input id="username" name="username" type="text" placeholder="e.g. rahul" autocomplete="username" required autofocus>
+          <label for="password">Password</label><input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button class="button button-primary button-full" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="demo-box"><strong>Demo accounts</strong><div><span>Admin</span><code>admin / Admin123!</code></div><div><span>Maker</span><code>rahul / Rahul123!</code></div><div><span>Checker</span><code>priya / Priya123!</code></div><div><span>Client</span><code>clientabc / Client123!</code></div></div>
+        <p class="tiny-note">Demo credentials are for local development only. Never use these passwords in a public deployment.</p>
+      </div>
+    </section>
+  </main>
+</body></html>

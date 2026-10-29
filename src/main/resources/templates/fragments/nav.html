@@ -1,0 +1,14 @@
+<nav class="topbar" th:fragment="nav">
+  <a class="brand" th:href="@{/dashboard}"><span class="brand-mark">N</span><span>NFPL <small>ACCESS CONTROL</small></span></a>
+  <div class="nav-links">
+    <a th:href="@{/dashboard}">Overview</a>
+    <a th:href="@{/jobs}">Jobs</a>
+    <a th:href="@{/access-check}">Access checker</a>
+    <a th:if="${isAdmin}" th:href="@{/admin/audit}">Audit trail</a>
+    <a th:if="${isAdmin}" th:href="@{/admin/grants-ui}">Admin</a>
+  </div>
+  <div class="topbar-right">
+    <span class="user-chip"><span class="status-dot"></span><span th:text="${currentUsername}">user</span></span>
+    <form th:action="@{/logout}" method="post"><button class="logout-button" type="submit">Sign out</button></form>
+  </div>
+</nav>

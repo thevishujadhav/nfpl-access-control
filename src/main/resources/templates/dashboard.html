@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Overview · NFPL Access Control</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><div th:replace="~{fragments/nav :: nav}"></div><main class="page-wrap">
+  <section class="welcome-row"><div><div class="eyebrow">WORKSPACE OVERVIEW</div><h1>Good to see you, <span th:text="${user.displayName}">there</span>.</h1><p class="muted">Here's a quick look at the shipment jobs you can access.</p></div><a class="button button-primary" th:href="@{/jobs}">View jobs <span>→</span></a></section>
+  <div class="alert alert-success" th:if="${successMessage}" th:text="${successMessage}"></div><div class="alert alert-error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+  <section class="stat-grid">
+    <article class="stat-card stat-dark"><div class="stat-label">VISIBLE JOBS</div><div class="stat-value" th:text="${visibleCount}">0</div><div class="stat-foot">Within your current access scope</div><div class="stat-icon">▦</div></article>
+    <article class="stat-card"><div class="stat-label">CONFIRMED</div><div class="stat-value" th:text="${confirmedCount}">0</div><div class="stat-foot">Ready to be prepared</div><div class="mini-icon icon-blue">01</div></article>
+    <article class="stat-card"><div class="stat-label">IN PROGRESS</div><div class="stat-value" th:text="${preparedCount + checkedCount}">0</div><div class="stat-foot">Prepared or awaiting filing</div><div class="mini-icon icon-orange">↗</div></article>
+    <article class="stat-card"><div class="stat-label">FILED</div><div class="stat-value" th:text="${filedCount}">0</div><div class="stat-foot">Completed filing stage</div><div class="mini-icon icon-green">✓</div></article>
+  </section>
+  <section class="content-grid">
+    <div class="panel jobs-panel"><div class="panel-heading"><div><h2>Recently visible jobs</h2><p class="muted">Only jobs visible under your current grants and ownership rules.</p></div><a class="text-link" th:href="@{/jobs}">All jobs →</a></div>
+      <div class="table-wrap"><table><thead><tr><th>JOB</th><th>CLIENT / BRANCH</th><th>MODE</th><th>STAGE</th><th>OWNER</th></tr></thead><tbody>
+      <tr th:each="job : ${jobs}"><td><a class="job-link" th:href="@{/jobs}"><strong th:text="${'#' + job.id}">#1</strong><span th:text="${job.title}">Import laptops</span></a></td><td><span th:text="${job.clientCode}">ABC</span><small class="cell-sub" th:text="${job.branchCode}">MUMBAI</small></td><td><span th:text="${job.direction}">IMPORT</span><small class="cell-sub" th:text="${job.mode}">AIR</small></td><td><span class="stage-pill" th:classappend="${#strings.toLowerCase(job.stage.toString())}" th:text="${job.stage}">CONFIRMED</span></td><td th:text="${job.ownerUsername}">rahul</td></tr>
+      <tr th:if="${#lists.isEmpty(jobs)}"><td colspan="5" class="empty-state">No jobs are visible under your current permissions.</td></tr>
+      </tbody></table></div>
+    </div>
+    <aside class="side-stack"><div class="panel profile-panel"><div class="panel-heading"><h2>Your access profile</h2><span class="avatar" th:text="${#strings.substring(user.displayName,0,1)}">R</span></div><div class="profile-name" th:text="${user.displayName}">Rahul Maker</div><div class="muted" th:text="${'@' + user.username}">@rahul</div><div class="profile-tags"><span class="tag" th:text="${user.accountType}">STAFF</span><span class="tag tag-green" th:if="${user.active}">Active</span><span class="tag tag-orange" th:if="${user.absent}">Marked absent</span></div><div class="profile-divider"></div><div class="profile-row"><span>Account status</span><strong th:text="${user.active ? 'Enabled' : 'Disabled'}">Enabled</strong></div><div class="profile-row"><span>Availability</span><strong th:text="${user.absent ? 'Absent' : 'Present'}">Present</strong></div></div>
+    <div class="panel quick-panel"><h2>Quick actions</h2><a class="quick-action" th:href="@{/access-check}"><span class="quick-icon">?</span><span><strong>Check a permission</strong><small>Find out why an action is allowed or denied</small></span><b>→</b></a><a class="quick-action" th:href="@{/jobs}"><span class="quick-icon">▤</span><span><strong>Open job register</strong><small>Review jobs within your scope</small></span><b>→</b></a><a th:if="${isAdmin}" class="quick-action" th:href="@{/admin/audit}"><span class="quick-icon">◷</span><span><strong>Review audit trail</strong><small>Inspect recorded access decisions</small></span><b>→</b></a></div></aside>
+  </section>
+  <footer class="page-footer">NFPL Access Control <span>·</span> Assignment prototype</footer>
+</main></body></html>
